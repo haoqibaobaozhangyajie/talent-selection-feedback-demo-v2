@@ -628,6 +628,23 @@ input {
   font-size: 12px;
 }
 
+.sample-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-top: 10px;
+}
+
+.sample-row button {
+  border: 1px solid #e2e6f3;
+  border-radius: 18px;
+  padding: 6px 10px;
+  color: #655cf5;
+  background: #f7f6ff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
 .search-results {
   max-height: 268px;
   overflow: auto;
@@ -890,7 +907,7 @@ input {
           <h4>2026-07-03</h4>
           <button>推荐适合干总公司营销部负责人...</button>
           <button>推荐适合担任总公司营销部负...</button>
-          <button>帮我对比候选人C和候选人D的优劣势</button>
+          <button>帮我对比推荐人C和推荐人D的优劣势</button>
           <h4>2026-07-02</h4>
           <button>帮我查找重点高校毕业的人员</button>
           <button>考察寿险一把手</button>
@@ -993,6 +1010,7 @@ input {
               <input id="searchInput" type="search" placeholder="例如：候选人C、U12、候选人A" />
               <button id="searchBtn">搜索</button>
             </div>
+            <div class="sample-row" id="sampleRow"></div>
             <p class="limit-tip">最多选择3人。搜索结果先展示基础信息，选择2人及以上后可生成岗位匹配数据。</p>
           </div>
           <div class="search-results" id="searchResults"></div>
@@ -1031,7 +1049,7 @@ input {
 const candidates = [
   {
     id: "U14-201911",
-    name: "候选人A",
+    name: "推荐人A",
     age: 41,
     level: "U14",
     joined: "2019-11-07加入示例集团",
@@ -1047,7 +1065,7 @@ const candidates = [
   },
   {
     id: "S15B-202011",
-    name: "候选人B",
+    name: "推荐人B",
     age: 52,
     level: "S15B",
     joined: "2020-11-10加入示例集团",
@@ -1057,13 +1075,13 @@ const candidates = [
     status: "平调",
     avatar: "梅",
     strengths: "一线机构经营管理经验强，带团队和结果交付稳定。",
-    risks: "总部营销培训专项经历不如候选人A直接，需关注从经营管理到专业支持岗位的适配。",
+    risks: "总部营销培训专项经历不如推荐人A直接，需关注从经营管理到专业支持岗位的适配。",
     tags: ["机构经营", "团队管理", "寿险", "负责人"],
     reason: "综合管理能力突出，但专业场景贴合度略低。"
   },
   {
     id: "U12-200807",
-    name: "候选人C",
+    name: "推荐人C",
     age: 41,
     level: "U12",
     joined: "2008-07-01加入示例集团",
@@ -1079,7 +1097,7 @@ const candidates = [
   },
   {
     id: "U12-201103",
-    name: "候选人D",
+    name: "推荐人D",
     age: 46,
     level: "U12",
     joined: "2011-03-09加入示例集团",
@@ -1095,7 +1113,7 @@ const candidates = [
   },
   {
     id: "U14-201402",
-    name: "候选人E",
+    name: "推荐人E",
     age: 45,
     level: "U14",
     joined: "2014-02-24加入示例集团",
@@ -1111,7 +1129,7 @@ const candidates = [
   },
   {
     id: "U13-201905",
-    name: "候选人F",
+    name: "推荐人F",
     age: 38,
     level: "U13",
     joined: "2019-05-13加入示例集团",
@@ -1127,12 +1145,112 @@ const candidates = [
   }
 ];
 
+const searchCandidates = [
+  {
+    id: "U12-202203",
+    name: "候选人A",
+    age: 39,
+    level: "U12",
+    joined: "2022-03-18加入示例集团",
+    dept: "示例公司/示例江苏分公司/业务发展部",
+    title: "业务发展部部门负责人",
+    score: 88,
+    status: "平调",
+    avatar: "A",
+    strengths: "一线业务推动经验较强，熟悉队伍经营节奏，对培训落地场景理解较好。",
+    risks: "总部岗位经历不足，需要进一步验证跨部门协同和制度化输出能力。",
+    tags: ["业务推动", "队伍经营", "培训落地", "部门负责人"],
+    reason: "业务场景贴近度较高，适合作为非推荐名单外的补充候选。"
+  },
+  {
+    id: "U13-202106",
+    name: "候选人B",
+    age: 43,
+    level: "U13",
+    joined: "2021-06-09加入示例集团",
+    dept: "示例公司/示例山东分公司/培训管理部",
+    title: "培训管理部负责人",
+    score: 91,
+    status: "平调",
+    avatar: "B",
+    strengths: "培训管理经验直接，课程体系、骨干培养和项目推进能力与目标岗位高度相关。",
+    risks: "当前主要在分公司场景，总部复杂项目统筹经验需要补充判断。",
+    tags: ["培训管理", "骨干培养", "项目推进", "课程体系"],
+    reason: "专业标签命中最集中，岗位匹配分在手动候选人中最高。"
+  },
+  {
+    id: "U11-202004",
+    name: "候选人C",
+    age: 36,
+    level: "U11",
+    joined: "2020-04-22加入示例集团",
+    dept: "示例公司/示例河北分公司/个险渠道部",
+    title: "个险渠道部经理",
+    score: 84,
+    status: "平调",
+    avatar: "C",
+    strengths: "个险渠道经验扎实，熟悉基层队伍需求，反馈敏感度较高。",
+    risks: "管理层级和总部培训项目经验相对不足，短期胜任需要辅导。",
+    tags: ["个险渠道", "基层经营", "业务反馈", "成长性"],
+    reason: "条线贴合，但岗位层级和项目经验略弱。"
+  },
+  {
+    id: "U12-201909",
+    name: "候选人D",
+    age: 40,
+    level: "U12",
+    joined: "2019-09-16加入示例集团",
+    dept: "示例公司/示例安徽分公司/人力发展部",
+    title: "人力发展部负责人",
+    score: 86,
+    status: "平调",
+    avatar: "D",
+    strengths: "人才培养、干部发展和培训资源整合经验较好。",
+    risks: "业务条线深度不如个险和营销培训背景候选人，需要关注业务理解。",
+    tags: ["人才培养", "干部发展", "资源整合", "培训项目"],
+    reason: "培养体系能力可迁移，业务条线匹配度中等。"
+  },
+  {
+    id: "U14-201705",
+    name: "候选人E",
+    age: 45,
+    level: "U14",
+    joined: "2017-05-12加入示例集团",
+    dept: "示例公司/示例湖北分公司/总经理室",
+    title: "总经理室成员",
+    score: 83,
+    status: "平调",
+    avatar: "E",
+    strengths: "综合管理和经营判断较强，能从机构视角理解岗位需求。",
+    risks: "营销培训专业标签较少，进入专业支持岗位后磨合成本偏高。",
+    tags: ["综合管理", "机构经营", "统筹协调"],
+    reason: "管理能力强，但专业匹配证据不够集中。"
+  },
+  {
+    id: "U10-202301",
+    name: "候选人F",
+    age: 34,
+    level: "U10",
+    joined: "2023-01-05加入示例集团",
+    dept: "示例公司/示例福建分公司/营销企划部",
+    title: "营销企划岗",
+    score: 79,
+    status: "平调",
+    avatar: "F",
+    strengths: "营销企划思路活跃，对活动设计和数据跟踪较敏感。",
+    risks: "管理经验和岗位层级不足，暂不适合直接作为处负责人首选。",
+    tags: ["营销企划", "活动设计", "数据跟踪", "潜力"],
+    reason: "可作为潜力观察对象，但当前胜任度低于其他候选。"
+  }
+];
+
 const selected = new Map();
 const recommendationList = document.getElementById("recommendationList");
 const drawer = document.getElementById("drawer");
 const drawerList = document.getElementById("drawerList");
 const feedbackModal = document.getElementById("feedbackModal");
 const searchInput = document.getElementById("searchInput");
+const sampleRow = document.getElementById("sampleRow");
 const searchResults = document.getElementById("searchResults");
 const selectedCount = document.getElementById("selectedCount");
 const selectedNames = document.getElementById("selectedNames");
@@ -1185,7 +1303,7 @@ function renderDrawer() {
 
 function renderSearchResults() {
   const keyword = searchInput.value.trim().toLowerCase();
-  const filtered = candidates.filter((person) => {
+  const filtered = searchCandidates.filter((person) => {
     return (
       !keyword ||
       person.name.toLowerCase().includes(keyword) ||
@@ -1196,6 +1314,20 @@ function renderSearchResults() {
 
   searchResults.innerHTML = "";
   filtered.forEach((person) => searchResults.appendChild(candidateCard(person, true, false)));
+}
+
+function renderSampleRow() {
+  sampleRow.innerHTML = "";
+  searchCandidates.slice(0, 4).forEach((person) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.textContent = `${person.name} ${person.level}`;
+    button.addEventListener("click", () => {
+      searchInput.value = person.name;
+      renderSearchResults();
+    });
+    sampleRow.appendChild(button);
+  });
 }
 
 function toggleSelect(person) {
@@ -1288,14 +1420,12 @@ function startCompareCalculation() {
 
   let remainingSeconds = 10;
   compareSelectedBtn.disabled = true;
-  compareSelectedBtn.textContent = `分析中 ${remainingSeconds}s`;
-  calculationStatus.textContent = `正在调用岗位匹配模型，生成匹配分、优势短板和标签差异...约${remainingSeconds}秒`;
+  compareSelectedBtn.textContent = "分析中...";
+  calculationStatus.textContent = "正在调用岗位匹配模型，生成匹配分、优势短板和标签差异，请稍候...";
   calculationStatus.classList.remove("hidden");
 
   calculationTimer = setInterval(() => {
     remainingSeconds -= 1;
-    compareSelectedBtn.textContent = `分析中 ${remainingSeconds}s`;
-    calculationStatus.textContent = `正在调用岗位匹配模型，生成匹配分、优势短板和标签差异...约${remainingSeconds}秒`;
     if (remainingSeconds <= 0 && calculationTimer) {
       clearInterval(calculationTimer);
       calculationTimer = null;
@@ -1329,6 +1459,7 @@ searchInput.addEventListener("input", renderSearchResults);
 
 renderRecommendations();
 renderDrawer();
+renderSampleRow();
 
     </script>
   </body>
