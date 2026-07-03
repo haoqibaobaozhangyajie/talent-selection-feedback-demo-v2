@@ -907,7 +907,7 @@ input {
           <h4>2026-07-03</h4>
           <button>推荐适合干总公司营销部负责人...</button>
           <button>推荐适合担任总公司营销部负...</button>
-          <button>帮我对比推荐人C和推荐人D的优劣势</button>
+          <button>帮我对比孙雅雯和赵鹏的优劣势</button>
           <h4>2026-07-02</h4>
           <button>帮我查找重点高校毕业的人员</button>
           <button>考察寿险一把手</button>
@@ -1007,7 +1007,7 @@ input {
           <div class="search-panel">
             <label for="searchInput">按工号或姓名搜索人员</label>
             <div class="search-row">
-              <input id="searchInput" type="search" placeholder="例如：候选人C、U12、候选人A" />
+              <input id="searchInput" type="search" placeholder="例如：周明、A10237、赵倩" />
               <button id="searchBtn">搜索</button>
             </div>
             <div class="sample-row" id="sampleRow"></div>
@@ -1049,7 +1049,7 @@ input {
 const candidates = [
   {
     id: "U14-201911",
-    name: "推荐人A",
+    name: "陈明远",
     age: 41,
     level: "U14",
     joined: "2019-11-07加入示例集团",
@@ -1057,7 +1057,7 @@ const candidates = [
     title: "业务支持部-培训管理处-处负责人",
     score: 92,
     status: "平调",
-    avatar: "付",
+    avatar: "陈",
     strengths: "营销培训条线经历完整，现岗位与目标岗位高度相邻，组织推动和课程体系建设经验较强。",
     risks: "跨机构协同样本偏少，对总部综合管理场景还需要补充验证。",
     tags: ["营销培训", "个险条线", "处负责人", "组织推动"],
@@ -1065,7 +1065,7 @@ const candidates = [
   },
   {
     id: "S15B-202011",
-    name: "推荐人B",
+    name: "刘建峰",
     age: 52,
     level: "S15B",
     joined: "2020-11-10加入示例集团",
@@ -1073,15 +1073,15 @@ const candidates = [
     title: "总经理室负责人",
     score: 89,
     status: "平调",
-    avatar: "梅",
+    avatar: "刘",
     strengths: "一线机构经营管理经验强，带团队和结果交付稳定。",
-    risks: "总部营销培训专项经历不如推荐人A直接，需关注从经营管理到专业支持岗位的适配。",
+    risks: "总部营销培训专项经历不如陈明远直接，需关注从经营管理到专业支持岗位的适配。",
     tags: ["机构经营", "团队管理", "寿险", "负责人"],
     reason: "综合管理能力突出，但专业场景贴合度略低。"
   },
   {
     id: "U12-200807",
-    name: "推荐人C",
+    name: "孙雅雯",
     age: 41,
     level: "U12",
     joined: "2008-07-01加入示例集团",
@@ -1089,7 +1089,7 @@ const candidates = [
     title: "团体业务部部门负责人",
     score: 85,
     status: "平调",
-    avatar: "田",
+    avatar: "孙",
     strengths: "业务一线经验扎实，熟悉队伍经营和基层执行反馈。",
     risks: "目标岗位偏总部培训推动，当前层级和总部项目经验存在差距。",
     tags: ["业务一线", "队伍经营", "职团业务", "基层反馈"],
@@ -1097,7 +1097,7 @@ const candidates = [
   },
   {
     id: "U12-201103",
-    name: "推荐人D",
+    name: "赵鹏",
     age: 46,
     level: "U12",
     joined: "2011-03-09加入示例集团",
@@ -1105,7 +1105,7 @@ const candidates = [
     title: "总经理室负责人",
     score: 82,
     status: "平调",
-    avatar: "姜",
+    avatar: "赵",
     strengths: "机构负责人经验充分，综合经营意识较好。",
     risks: "与营销培训岗位的专业标签交集较少，调任后学习成本较高。",
     tags: ["机构负责人", "经营管理", "综合统筹"],
@@ -1113,7 +1113,7 @@ const candidates = [
   },
   {
     id: "U14-201402",
-    name: "推荐人E",
+    name: "何琳",
     age: 45,
     level: "U14",
     joined: "2014-02-24加入示例集团",
@@ -1121,7 +1121,7 @@ const candidates = [
     title: "总经理室负责人",
     score: 82,
     status: "平调",
-    avatar: "王",
+    avatar: "何",
     strengths: "机构经营稳定，具备中后台协同经验。",
     risks: "营销骨干培训的直接项目证据不足。",
     tags: ["机构管理", "协同推进", "寿险"],
@@ -1129,7 +1129,7 @@ const candidates = [
   },
   {
     id: "U13-201905",
-    name: "推荐人F",
+    name: "郭志强",
     age: 38,
     level: "U13",
     joined: "2019-05-13加入示例集团",
@@ -1137,7 +1137,7 @@ const candidates = [
     title: "总经理室负责人",
     score: 81,
     status: "平调",
-    avatar: "马",
+    avatar: "郭",
     strengths: "年龄结构和成长性较好，对机构业务理解较深。",
     risks: "目标岗位关键标签命中较少，需要更多培训项目经历支撑。",
     tags: ["成长性", "机构业务", "团队管理"],
@@ -1147,8 +1147,8 @@ const candidates = [
 
 const searchCandidates = [
   {
-    id: "U12-202203",
-    name: "候选人A",
+    id: "A10237",
+    name: "周明",
     age: 39,
     level: "U12",
     joined: "2022-03-18加入示例集团",
@@ -1156,15 +1156,15 @@ const searchCandidates = [
     title: "业务发展部部门负责人",
     score: 88,
     status: "平调",
-    avatar: "A",
+    avatar: "周",
     strengths: "一线业务推动经验较强，熟悉队伍经营节奏，对培训落地场景理解较好。",
     risks: "总部岗位经历不足，需要进一步验证跨部门协同和制度化输出能力。",
     tags: ["业务推动", "队伍经营", "培训落地", "部门负责人"],
     reason: "业务场景贴近度较高，适合作为非推荐名单外的补充候选。"
   },
   {
-    id: "U13-202106",
-    name: "候选人B",
+    id: "B21846",
+    name: "赵倩",
     age: 43,
     level: "U13",
     joined: "2021-06-09加入示例集团",
@@ -1172,15 +1172,15 @@ const searchCandidates = [
     title: "培训管理部负责人",
     score: 91,
     status: "平调",
-    avatar: "B",
+    avatar: "赵",
     strengths: "培训管理经验直接，课程体系、骨干培养和项目推进能力与目标岗位高度相关。",
     risks: "当前主要在分公司场景，总部复杂项目统筹经验需要补充判断。",
     tags: ["培训管理", "骨干培养", "项目推进", "课程体系"],
     reason: "专业标签命中最集中，岗位匹配分在手动候选人中最高。"
   },
   {
-    id: "U11-202004",
-    name: "候选人C",
+    id: "C30915",
+    name: "李思雨",
     age: 36,
     level: "U11",
     joined: "2020-04-22加入示例集团",
@@ -1188,15 +1188,15 @@ const searchCandidates = [
     title: "个险渠道部经理",
     score: 84,
     status: "平调",
-    avatar: "C",
+    avatar: "李",
     strengths: "个险渠道经验扎实，熟悉基层队伍需求，反馈敏感度较高。",
     risks: "管理层级和总部培训项目经验相对不足，短期胜任需要辅导。",
     tags: ["个险渠道", "基层经营", "业务反馈", "成长性"],
     reason: "条线贴合，但岗位层级和项目经验略弱。"
   },
   {
-    id: "U12-201909",
-    name: "候选人D",
+    id: "D41782",
+    name: "王浩然",
     age: 40,
     level: "U12",
     joined: "2019-09-16加入示例集团",
@@ -1204,15 +1204,15 @@ const searchCandidates = [
     title: "人力发展部负责人",
     score: 86,
     status: "平调",
-    avatar: "D",
+    avatar: "王",
     strengths: "人才培养、干部发展和培训资源整合经验较好。",
     risks: "业务条线深度不如个险和营销培训背景候选人，需要关注业务理解。",
     tags: ["人才培养", "干部发展", "资源整合", "培训项目"],
     reason: "培养体系能力可迁移，业务条线匹配度中等。"
   },
   {
-    id: "U14-201705",
-    name: "候选人E",
+    id: "E50629",
+    name: "韩雪",
     age: 45,
     level: "U14",
     joined: "2017-05-12加入示例集团",
@@ -1220,15 +1220,15 @@ const searchCandidates = [
     title: "总经理室成员",
     score: 83,
     status: "平调",
-    avatar: "E",
+    avatar: "韩",
     strengths: "综合管理和经营判断较强，能从机构视角理解岗位需求。",
     risks: "营销培训专业标签较少，进入专业支持岗位后磨合成本偏高。",
     tags: ["综合管理", "机构经营", "统筹协调"],
     reason: "管理能力强，但专业匹配证据不够集中。"
   },
   {
-    id: "U10-202301",
-    name: "候选人F",
+    id: "F63810",
+    name: "张磊",
     age: 34,
     level: "U10",
     joined: "2023-01-05加入示例集团",
@@ -1236,7 +1236,7 @@ const searchCandidates = [
     title: "营销企划岗",
     score: 79,
     status: "平调",
-    avatar: "F",
+    avatar: "张",
     strengths: "营销企划思路活跃，对活动设计和数据跟踪较敏感。",
     risks: "管理经验和岗位层级不足，暂不适合直接作为处负责人首选。",
     tags: ["营销企划", "活动设计", "数据跟踪", "潜力"],
@@ -1266,13 +1266,16 @@ let calculationTimeout = null;
 function candidateCard(person, withSelect = false, showScore = true) {
   const article = document.createElement("article");
   article.className = "candidate";
+  const identityLine = showScore
+    ? `${person.age}岁　${person.level}　${person.joined}`
+    : `${person.age}岁　${person.level}　工号 ${person.id}`;
   const scoreLine = showScore
     ? `现任：${person.title}　<span class="score">${person.score}</span><span class="tag">${person.status}</span>`
     : `现任：${person.title}<br><span class="score-placeholder">待生成当前岗位匹配数据</span>`;
   article.innerHTML = `
     <div class="avatar small">${person.avatar}</div>
     <div>
-      <h3>${person.name}<span>${person.age}岁　${person.level}　${person.joined}</span></h3>
+      <h3>${person.name}<span>${identityLine}</span></h3>
       <p>${person.dept}</p>
       <p>${scoreLine}</p>
     </div>
@@ -1307,8 +1310,7 @@ function renderSearchResults() {
     return (
       !keyword ||
       person.name.toLowerCase().includes(keyword) ||
-      person.id.toLowerCase().includes(keyword) ||
-      person.level.toLowerCase().includes(keyword)
+      person.id.toLowerCase().includes(keyword)
     );
   });
 
@@ -1321,7 +1323,7 @@ function renderSampleRow() {
   searchCandidates.slice(0, 4).forEach((person) => {
     const button = document.createElement("button");
     button.type = "button";
-    button.textContent = `${person.name} ${person.level}`;
+    button.textContent = `${person.name} ${person.id}`;
     button.addEventListener("click", () => {
       searchInput.value = person.name;
       renderSearchResults();
@@ -1464,4 +1466,5 @@ renderSampleRow();
     </script>
   </body>
 </html>
+
 
