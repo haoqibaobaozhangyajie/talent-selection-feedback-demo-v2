@@ -556,6 +556,8 @@ textarea {
 .modal {
   position: relative;
   width: min(560px, 92vw);
+  max-height: 92vh;
+  overflow: auto;
   padding: 24px;
   border-radius: 7px;
   background: #fff;
@@ -665,6 +667,65 @@ input {
   margin-top: 4px;
   color: #8c94a8;
   font-size: 13px;
+}
+
+.reason-panel {
+  margin: -4px 0 16px;
+  padding: 14px;
+  border: 1px solid #e7ebf6;
+  border-radius: 10px;
+  background: #fbfcff;
+}
+
+.reason-head {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+}
+
+.reason-head strong {
+  font-size: 14px;
+}
+
+.reason-head span {
+  padding: 2px 7px;
+  border-radius: 8px;
+  color: #8e96a8;
+  background: #f1f3f8;
+  font-size: 12px;
+}
+
+.reason-options {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.reason-chip {
+  border: 1px solid #e2e6f3;
+  border-radius: 18px;
+  padding: 7px 10px;
+  color: #5f6680;
+  background: #fff;
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.reason-chip.selected {
+  border-color: #7768ff;
+  color: #fff;
+  background: var(--purple);
+}
+
+.other-reason {
+  width: 100%;
+  min-height: 58px;
+  margin-top: 10px;
+  padding: 10px 12px;
+  border: 1px solid #dfe4ef;
+  border-radius: 8px;
+  line-height: 1.5;
 }
 
 .secondary-btn {
@@ -1021,6 +1082,14 @@ input {
             </div>
             <button class="secondary-btn hidden" id="compareSelectedBtn">计算岗位匹配并对比</button>
           </div>
+          <div class="reason-panel hidden" id="reasonPanel">
+            <div class="reason-head">
+              <strong>这个人为什么更合适？</strong>
+              <span>选填</span>
+            </div>
+            <div class="reason-options" id="reasonOptions"></div>
+            <textarea id="otherReason" class="other-reason hidden" placeholder="请输入其他说明，例如：长期负责同类项目、熟悉目标团队等"></textarea>
+          </div>
           <div class="calculation-status hidden" id="calculationStatus">
             正在基于当前岗位生成匹配分、优势短板和标签差异...
           </div>
@@ -1255,11 +1324,24 @@ const searchResults = document.getElementById("searchResults");
 const selectedCount = document.getElementById("selectedCount");
 const selectedNames = document.getElementById("selectedNames");
 const compareSelectedBtn = document.getElementById("compareSelectedBtn");
+const reasonPanel = document.getElementById("reasonPanel");
+const reasonOptions = document.getElementById("reasonOptions");
+const otherReason = document.getElementById("otherReason");
 const comparePanel = document.getElementById("comparePanel");
 const scoreStrip = document.getElementById("scoreStrip");
 const compareGrid = document.getElementById("compareGrid");
 const rankReason = document.getElementById("rankReason");
 const calculationStatus = document.getElementById("calculationStatus");
+const feedbackReasons = [
+  "岗位经历更相关",
+  "绩效/考核更符合",
+  "任职年限更符合",
+  "专业领域更匹配",
+  "有关键项目/产品经验",
+  "所在机构/层级更匹配",
+  "其他说明"
+];
+const selectedReasons = new Set();
 let calculationTimer = null;
 let calculationTimeout = null;
 
@@ -1332,6 +1414,30 @@ function renderSampleRow() {
   });
 }
 
+function renderReasonOptions() {
+  reasonOptions.innerHTML = "";
+  feedbackReasons.forEach((reason) => {
+    const button = document.createElement("button");
+    button.type = "button";
+    button.className = "reason-chip";
+    button.textContent = reason;
+    if (selectedReasons.has(reason)) button.classList.add("selected");
+    button.addEventListener("click", () => toggleReason(reason));
+    reasonOptions.appendChild(button);
+  });
+  otherReason.classList.toggle("hidden", !selectedReasons.has("其他说明"));
+}
+
+function toggleReason(reason) {
+  if (selectedReasons.has(reason)) {
+    selectedReasons.delete(reason);
+  } else {
+    selectedReasons.add(reason);
+  }
+  if (!selectedReasons.has("其他说明")) otherReason.value = "";
+  renderReasonOptions();
+}
+
 function toggleSelect(person) {
   if (selected.has(person.id)) {
     selected.delete(person.id);
@@ -1347,9 +1453,15 @@ function renderSelectedState() {
   selectedCount.textContent = people.length;
   selectedNames.textContent = people.length ? people.map((person) => person.name).join("、") : "暂未选择人员";
   compareSelectedBtn.classList.toggle("hidden", people.length < 2);
+  reasonPanel.classList.toggle("hidden", people.length === 0);
   compareSelectedBtn.disabled = false;
   compareSelectedBtn.textContent = "计算岗位匹配并对比";
   calculationStatus.classList.add("hidden");
+  if (people.length === 0) {
+    selectedReasons.clear();
+    otherReason.value = "";
+    renderReasonOptions();
+  }
   resetCalculation();
 }
 
@@ -1368,7 +1480,10 @@ function openFeedbackModal() {
   feedbackModal.classList.remove("hidden");
   searchInput.value = "";
   selected.clear();
+  selectedReasons.clear();
+  otherReason.value = "";
   renderSearchResults();
+  renderReasonOptions();
   renderSelectedState();
   setTimeout(() => searchInput.focus(), 80);
 }
@@ -1462,9 +1577,9 @@ searchInput.addEventListener("input", renderSearchResults);
 renderRecommendations();
 renderDrawer();
 renderSampleRow();
+renderReasonOptions();
 
     </script>
   </body>
 </html>
-
 
